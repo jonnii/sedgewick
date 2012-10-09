@@ -1,2 +1,5 @@
 algorithms/build
 algorithms/src/*.o
+
+*.log
+*.dSYM/

@@ -8,4 +8,4 @@ List *List_create()
 void List_destroy(struct List *list)
 {
 	free(list);
-} 
+}
