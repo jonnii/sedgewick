@@ -24,7 +24,6 @@ def roll_one
 end
 
 def roll
-  3.times.select{|i| i}
   NUM_DICE.times.map { |i| roll_one }.inject {|sum, x| sum + x }
 end
 
