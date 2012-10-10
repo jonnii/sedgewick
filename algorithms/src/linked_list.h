@@ -15,6 +15,13 @@ typedef struct List {
 } List;
 
 List *List_create();
-void List_destroy(List* list);
+
+void List_destroy(List *list);
+
+void List_add(List *list, void *item);
+
+void List_clear(List *list);
+
+void List_clear_and_destroy(List *list);
 
 #endif
