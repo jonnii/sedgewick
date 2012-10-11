@@ -16,8 +16,8 @@ void LinkedList_destroy(list_p list)
 	free(list);
 }
 
-ListNode *ListNode_create(void *item){
-	ListNode *node = calloc(1, sizeof(ListNode));
+list_node *ListNode_create(void *item){
+	list_node *node = calloc(1, sizeof(list_node));
 	check_mem(node);
 	node->value = item;
 	return node;
@@ -31,14 +31,14 @@ void LinkedList_add(list_p list, void *item)
 	check_debug(list != NULL, "Cannot add an item to a NULL list");
 	check_debug(item != NULL, "Cannot add a NULL item");
 
-	ListNode *node = ListNode_create(item);
+	list_node *node = ListNode_create(item);
 	if(list->first == NULL)
 	{
 		list->first = node;
 	}
 	else
 	{
-		ListNode *curr = list->first;
+		list_node *curr = list->first;
 		while(curr->next != NULL)
 		{
 			curr = curr->next;
@@ -56,7 +56,7 @@ void *LinkedList_find_at(list_p list, int index)
 		return NULL;
 	}
 
-	ListNode *node = list->first;
+	list_node *node = list->first;
 	
 	for(int i = 0 ; i < index ; ++i){
 		if(node->next == NULL)
@@ -72,7 +72,7 @@ void *LinkedList_find_at(list_p list, int index)
 
 int LinkedList_count(list_p list)
 {
-	ListNode *node = list->first;
+	list_node *node = list->first;
 	int count = 0;
 	
 	while(node != NULL)
@@ -91,7 +91,7 @@ void LinkedList_delete_at(list_p list, int index)
 		return;
 	}
 
-	ListNode *curr = list->first;
+	list_node *curr = list->first;
 
 	if(index == 0)
 	{		
@@ -111,7 +111,7 @@ void LinkedList_delete_at(list_p list, int index)
 			}
 		}
 		
-		ListNode *temp = curr->next;
+		list_node *temp = curr->next;
 
 		curr->next = curr->next->next;
 		curr = curr->next;
@@ -123,7 +123,7 @@ void LinkedList_delete_at(list_p list, int index)
 
 int LinkedList_index_of(list_p list, void *value)
 {
-	ListNode *curr = list->first;
+	list_node *curr = list->first;
 	int index = 0;
 	while(curr != NULL)
 	{
@@ -141,7 +141,7 @@ int LinkedList_index_of(list_p list, void *value)
 
 void LinkedList_clear(list_p list)
 {
-	for(ListNode *curr = list->first ; curr != NULL; curr = curr->next)
+	for(list_node *curr = list->first ; curr != NULL; curr = curr->next)
 	{
 		free(curr->value);
 		curr->value = NULL;
@@ -150,10 +150,10 @@ void LinkedList_clear(list_p list)
 
 void LinkedList_clear_and_destroy(list_p list)
 {
-	ListNode *node = list->first;
+	list_node *node = list->first;
 	while(node != NULL)
 	{
-		ListNode *temp = node;
+		list_node *temp = node;
 		node = node->next;
 
 		free(temp->value);
