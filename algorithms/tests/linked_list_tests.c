@@ -10,9 +10,9 @@ int *make_test_data(int value)
 	return data;
 }
 
-LinkedList *create_list_with_items(int numItems)
+list_p create_list_with_items(int numItems)
 {
-	LinkedList *list = LinkedList_create();
+	list_p list = LinkedList_create();
 	
 	for(int i = 0 ; i < numItems ; ++i)
 	{
@@ -24,7 +24,7 @@ LinkedList *create_list_with_items(int numItems)
 
 char *test_create()
 {
-	LinkedList *list = LinkedList_create();
+	list_p list = LinkedList_create();
 	mu_assert(list != NULL, "Could not create list");
 	return NULL;
 }
@@ -37,7 +37,7 @@ char *test_destroy()
 
 char *test_add()
 {
-	LinkedList *list = LinkedList_create();
+	list_p list = LinkedList_create();
 	void *data = make_test_data(1);
 	LinkedList_add(list, data);
 
@@ -51,7 +51,7 @@ char *test_add()
 
 char *test_add_multiple()
 {
-	LinkedList *list = LinkedList_create();
+	list_p list = LinkedList_create();
 	void *data = make_test_data(1);
 	LinkedList_add(list, make_test_data(2));
 	LinkedList_add(list, data);
@@ -64,7 +64,7 @@ char *test_add_multiple()
 
 char *test_find_at_index_on_empty_list()
 {
-	LinkedList *list = LinkedList_create();
+	list_p list = LinkedList_create();
 
 	void *data = LinkedList_find_at(list, 0);
 
@@ -76,7 +76,7 @@ char *test_find_at_index_on_empty_list()
 
 char *test_find_at_index()
 {
-	LinkedList *list = create_list_with_items(5);
+	list_p list = create_list_with_items(5);
 
 	int second = *((int*)LinkedList_find_at(list, 2));
 	mu_assert(second == 2, "didn't find the right value");
@@ -91,7 +91,7 @@ char *test_find_at_index()
 
 char *test_find_index_greater_than_list_size()
 {
-	LinkedList *list = create_list_with_items(5);
+	list_p list = create_list_with_items(5);
 
 	void *second = LinkedList_find_at(list, 10);
 	mu_assert(second == NULL, "should not have found a value");
@@ -103,7 +103,7 @@ char *test_find_index_greater_than_list_size()
 
 char *test_clear_empty()
 {
-	LinkedList *list = LinkedList_create();
+	list_p list = LinkedList_create();
 
 	LinkedList_clear(list);
 	
@@ -112,7 +112,7 @@ char *test_clear_empty()
 
 char *test_clear()
 {
-	LinkedList *list = LinkedList_create();
+	list_p list = LinkedList_create();
 	LinkedList_add(list, make_test_data(1));
 
 	LinkedList_clear(list);
@@ -125,7 +125,7 @@ char *test_clear()
 
 char *test_clear_and_destroy()
 {
-	LinkedList *list = LinkedList_create();
+	list_p list = LinkedList_create();
 	LinkedList_add(list, make_test_data(1));
 
 	LinkedList_clear_and_destroy(list);
@@ -135,7 +135,7 @@ char *test_clear_and_destroy()
 
 char *test_count_empty()
 {
-	LinkedList *list = LinkedList_create();
+	list_p list = LinkedList_create();
 
 	int count = LinkedList_count(list);
 	mu_assert(count == 0, "should not have any count")
@@ -146,7 +146,7 @@ char *test_count_empty()
 
 char *test_count()
 {
-	LinkedList *list = create_list_with_items(10);
+	list_p list = create_list_with_items(10);
 
 	int count = LinkedList_count(list);
 	mu_assert(count == 10, "should have count of 10")
@@ -157,7 +157,7 @@ char *test_count()
 
 char *test_delete_at_empty()
 {
-	LinkedList *list = LinkedList_create();
+	list_p list = LinkedList_create();
 
 	LinkedList_delete_at(list, 0);
 	mu_assert(LinkedList_count(list) == 0, "didnt find correct count");
@@ -168,7 +168,7 @@ char *test_delete_at_empty()
 
 char *test_delete_at_start()
 {
-	LinkedList *list = create_list_with_items(3);
+	list_p list = create_list_with_items(3);
 
 	LinkedList_delete_at(list, 0);
 
@@ -182,7 +182,7 @@ char *test_delete_at_start()
 
 char *test_delete_at_middle()
 {
-	LinkedList *list = create_list_with_items(8);
+	list_p list = create_list_with_items(8);
 
 	LinkedList_delete_at(list, 4);
 
@@ -196,7 +196,7 @@ char *test_delete_at_middle()
 
 char *test_delete_at_end()
 {
-	LinkedList *list = create_list_with_items(8);
+	list_p list = create_list_with_items(8);
 
 	LinkedList_delete_at(list, 7);
 
@@ -209,7 +209,7 @@ char *test_delete_at_end()
 
 char *test_delete_at_after()
 {
-	LinkedList *list = create_list_with_items(8);
+	list_p list = create_list_with_items(8);
 
 	LinkedList_delete_at(list, 10);
 
@@ -219,7 +219,7 @@ char *test_delete_at_after()
 
 char *test_index_of_not_found()
 {
-	LinkedList *list = create_list_with_items(8);	
+	list_p list = create_list_with_items(8);	
 
 	int index = LinkedList_index_of(list, make_test_data(5000));
 	mu_assert(index == -1, "expected -1 when index of not found");
@@ -230,7 +230,7 @@ char *test_index_of_not_found()
 
 char *test_index_of()
 {
-	LinkedList *list = create_list_with_items(5);
+	list_p list = create_list_with_items(5);
 	void *data = make_test_data(30);
 	LinkedList_add(list, data);
 

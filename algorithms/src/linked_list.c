@@ -1,9 +1,9 @@
 #include "linked_list.h"
 #include "dbg.h"
 
-LinkedList *LinkedList_create()
+list_p LinkedList_create()
 {
-	LinkedList *list = calloc(1, sizeof(LinkedList));
+	list_p list = calloc(1, sizeof(struct list));
 	check_mem(list);
 	return list; 
 error:
@@ -11,7 +11,7 @@ error:
 	return NULL;
 }
 
-void LinkedList_destroy(LinkedList *list)
+void LinkedList_destroy(list_p list)
 {
 	free(list);
 }
@@ -26,7 +26,7 @@ error:
 	return NULL;
 }
 
-void LinkedList_add(LinkedList *list, void *item)
+void LinkedList_add(list_p list, void *item)
 {
 	check_debug(list != NULL, "Cannot add an item to a NULL list");
 	check_debug(item != NULL, "Cannot add a NULL item");
@@ -49,7 +49,7 @@ error:
 	log_err("Could not add an item to the list");
 }
 
-void *LinkedList_find_at(LinkedList *list, int index)
+void *LinkedList_find_at(list_p list, int index)
 {
 	if(list->first == NULL)
 	{
@@ -70,7 +70,7 @@ void *LinkedList_find_at(LinkedList *list, int index)
 	return node->value;
 }
 
-int LinkedList_count(LinkedList *list)
+int LinkedList_count(list_p list)
 {
 	ListNode *node = list->first;
 	int count = 0;
@@ -84,7 +84,7 @@ int LinkedList_count(LinkedList *list)
 	return count;
 }
 
-void LinkedList_delete_at(LinkedList *list, int index)
+void LinkedList_delete_at(list_p list, int index)
 {
 	if(list->first == NULL)
 	{
@@ -121,7 +121,7 @@ void LinkedList_delete_at(LinkedList *list, int index)
 	}
 }
 
-int LinkedList_index_of(LinkedList *list, void *value)
+int LinkedList_index_of(list_p list, void *value)
 {
 	ListNode *curr = list->first;
 	int index = 0;
@@ -139,7 +139,7 @@ int LinkedList_index_of(LinkedList *list, void *value)
 	return -1;
 }
 
-void LinkedList_clear(LinkedList *list)
+void LinkedList_clear(list_p list)
 {
 	for(ListNode *curr = list->first ; curr != NULL; curr = curr->next)
 	{
@@ -148,7 +148,7 @@ void LinkedList_clear(LinkedList *list)
 	}
 }
 
-void LinkedList_clear_and_destroy(LinkedList *list)
+void LinkedList_clear_and_destroy(list_p list)
 {
 	ListNode *node = list->first;
 	while(node != NULL)

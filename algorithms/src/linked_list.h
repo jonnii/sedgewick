@@ -10,27 +10,29 @@ typedef struct ListNode {
 	void *value;
 } ListNode;
 
-typedef struct LinkedList {
+struct list {
 	ListNode *first;
-} LinkedList;
+};
 
-LinkedList *LinkedList_create();
+typedef struct list* list_p;
 
-void LinkedList_destroy(LinkedList *list);
+list_p LinkedList_create();
 
-void LinkedList_add(LinkedList *list, void *item);
+void LinkedList_destroy(list_p list);
 
-void LinkedList_clear(LinkedList *list);
+void LinkedList_add(list_p list, void *item);
 
-void LinkedList_clear_and_destroy(LinkedList *list);
+void LinkedList_clear(list_p list);
 
-void *LinkedList_find_at(LinkedList *list, int index);
+void LinkedList_clear_and_destroy(list_p list);
 
-int LinkedList_count(LinkedList *list);
+void *LinkedList_find_at(list_p list, int index);
 
-void LinkedList_delete_at(LinkedList *list, int index);
+int LinkedList_count(list_p list);
 
-int LinkedList_index_of(LinkedList *list, void *value);
+void LinkedList_delete_at(list_p list, int index);
+
+int LinkedList_index_of(list_p list, void *value);
 
 //bool List_delete_after(void *value);
 
