@@ -49,6 +49,27 @@ error:
 	log_err("Could not add an item to the list");
 }
 
+void *List_find_index(List *list, int index)
+{
+	if(list->first == NULL)
+	{
+		return NULL;
+	}
+
+	ListNode *node = list->first;
+	
+	for(int i = 0 ; i < index ; ++i){
+		if(node->next == NULL)
+		{
+			return NULL;
+		}
+
+		node = node->next;
+	}
+
+	return node->value;
+}
+
 void List_clear(List *list)
 {
 	for(ListNode *curr = list->first ; curr != NULL; curr = curr->next)

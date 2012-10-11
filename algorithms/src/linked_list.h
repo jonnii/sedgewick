@@ -24,4 +24,6 @@ void List_clear(List *list);
 
 void List_clear_and_destroy(List *list);
 
+void *List_find_index(List *list, int index);
+
 #endif
