@@ -12,63 +12,65 @@ int *make_test_data(int value)
 
 LinkedList *create_list_with_items(int numItems)
 {
-	LinkedList *list = List_create();
+	LinkedList *list = LinkedList_create();
+	
 	for(int i = 0 ; i < numItems ; ++i)
 	{
-		List_add(list, make_test_data(i));
+		LinkedList_add(list, make_test_data(i));
 	}
+
 	return list;
 }
 
 char *test_create()
 {
-	LinkedList *list = List_create();
+	LinkedList *list = LinkedList_create();
 	mu_assert(list != NULL, "Could not create list");
 	return NULL;
 }
 
 char *test_destroy()
 {
-	List_destroy(List_create());
+	LinkedList_destroy(LinkedList_create());
 	return NULL;
 }
 
 char *test_add()
 {
-	LinkedList *list = List_create();
+	LinkedList *list = LinkedList_create();
 	void *data = make_test_data(1);
-	List_add(list, data);
+	LinkedList_add(list, data);
 
 	mu_assert(list->first != NULL, "first item in list not set");
 	mu_assert(list->first->value != NULL, "first list value not set");
 	mu_assert(list->first->value == data, "Did not set data correctly");
 
-	List_clear_and_destroy(list);
+	LinkedList_clear_and_destroy(list);
 	return NULL;
 }
 
 char *test_add_multiple()
 {
-	LinkedList *list = List_create();
+	LinkedList *list = LinkedList_create();
 	void *data = make_test_data(1);
-	List_add(list, make_test_data(2));
-	List_add(list, data);
+	LinkedList_add(list, make_test_data(2));
+	LinkedList_add(list, data);
 
 	mu_assert(list->first->next->value == data, "Did not set data correctly");
 
-	List_clear_and_destroy(list);
+	LinkedList_clear_and_destroy(list);
 	return NULL;	
 }
 
 char *test_find_at_index_on_empty_list()
 {
-	LinkedList *list = List_create();
+	LinkedList *list = LinkedList_create();
 
-	void *data = List_find_at(list, 0);
+	void *data = LinkedList_find_at(list, 0);
 
 	mu_assert(data == NULL, "should have returned null data");
 
-	List_clear_and_destroy(list);
+	LinkedList_clear_and_destroy(list);
 	return NULL;
 }
 
@@ -76,13 +78,13 @@ char *test_find_at_index()
 {
 	LinkedList *list = create_list_with_items(5);
 
-	int second = *((int*)List_find_at(list, 2));
+	int second = *((int*)LinkedList_find_at(list, 2));
 	mu_assert(second == 2, "didn't find the right value");
 
-	int third = *((int*)List_find_at(list, 3));
+	int third = *((int*)LinkedList_find_at(list, 3));
 	mu_assert(third == 3, "didn't find the right value");
 
-	List_clear_and_destroy(list);
+	LinkedList_clear_and_destroy(list);
 
 	return NULL;
 }
@@ -91,55 +93,55 @@ char *test_find_index_greater_than_list_size()
 {
 	LinkedList *list = create_list_with_items(5);
 
-	void *second = List_find_at(list, 10);
+	void *second = LinkedList_find_at(list, 10);
 	mu_assert(second == NULL, "should not have found a value");
 
-	List_clear_and_destroy(list);
+	LinkedList_clear_and_destroy(list);
 
 	return NULL;
 }
 
 char *test_clear_empty()
 {
-	LinkedList *list = List_create();
+	LinkedList *list = LinkedList_create();
 
-	List_clear(list);
+	LinkedList_clear(list);
 	
 	return NULL;
 }
 
 char *test_clear()
 {
-	LinkedList *list = List_create();
-	List_add(list, make_test_data(1));
+	LinkedList *list = LinkedList_create();
+	LinkedList_add(list, make_test_data(1));
 
-	List_clear(list);
+	LinkedList_clear(list);
 
 	mu_assert(list->first->value == NULL, "The first item is still assigned");
 
-	List_destroy(list);
+	LinkedList_destroy(list);
 
 	return NULL;
 }
 
 char *test_clear_and_destroy()
 {
-	LinkedList *list = List_create();
-	List_add(list, make_test_data(1));
+	LinkedList *list = LinkedList_create();
+	LinkedList_add(list, make_test_data(1));
 
-	List_clear_and_destroy(list);
+	LinkedList_clear_and_destroy(list);
 
 	return NULL;
 }
 
 char *test_count_empty()
 {
-	LinkedList *list = List_create();
+	LinkedList *list = LinkedList_create();
 
-	int count = List_count(list);
+	int count = LinkedList_count(list);
 	mu_assert(count == 0, "should not have any count")
 
-	List_clear_and_destroy(list);
+	LinkedList_clear_and_destroy(list);
 
 	return NULL;
 }
@@ -148,10 +150,10 @@ char *test_count()
 {
 	LinkedList *list = create_list_with_items(10);
 
-	int count = List_count(list);
+	int count = LinkedList_count(list);
 	mu_assert(count == 10, "should have count of 10")
 
-	List_clear_and_destroy(list);
+	LinkedList_clear_and_destroy(list);
 
 	return NULL;
 }

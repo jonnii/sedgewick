@@ -14,19 +14,19 @@ typedef struct LinkedList {
 	ListNode *first;
 } LinkedList;
 
-LinkedList *List_create();
+LinkedList *LinkedList_create();
 
-void List_destroy(LinkedList *list);
+void LinkedList_destroy(LinkedList *list);
 
-void List_add(LinkedList *list, void *item);
+void LinkedList_add(LinkedList *list, void *item);
 
-void List_clear(LinkedList *list);
+void LinkedList_clear(LinkedList *list);
 
-void List_clear_and_destroy(LinkedList *list);
+void LinkedList_clear_and_destroy(LinkedList *list);
 
-void *List_find_at(LinkedList *list, int index);
+void *LinkedList_find_at(LinkedList *list, int index);
 
-int List_count(LinkedList *list);
+int LinkedList_count(LinkedList *list);
 
 //void List_delete_at(LinkedList *list, int i);
 

@@ -1,7 +1,7 @@
 #include "linked_list.h"
 #include "dbg.h"
 
-LinkedList *List_create()
+LinkedList *LinkedList_create()
 {
 	LinkedList *list = calloc(1, sizeof(LinkedList));
 	check_mem(list);
@@ -11,7 +11,7 @@ error:
 	return NULL;
 }
 
-void List_destroy(LinkedList *list)
+void LinkedList_destroy(LinkedList *list)
 {
 	free(list);
 }
@@ -26,7 +26,7 @@ error:
 	return NULL;
 }
 
-void List_add(LinkedList *list, void *item)
+void LinkedList_add(LinkedList *list, void *item)
 {
 	check_debug(list != NULL, "Cannot add an item to a NULL list");
 	check_debug(item != NULL, "Cannot add a NULL item");
@@ -49,7 +49,7 @@ error:
 	log_err("Could not add an item to the list");
 }
 
-void *List_find_at(LinkedList *list, int index)
+void *LinkedList_find_at(LinkedList *list, int index)
 {
 	if(list->first == NULL)
 	{
@@ -70,7 +70,7 @@ void *List_find_at(LinkedList *list, int index)
 	return node->value;
 }
 
-int List_count(LinkedList *list)
+int LinkedList_count(LinkedList *list)
 {
 	ListNode *node = list->first;
 	int count = 0;
@@ -83,7 +83,7 @@ int List_count(LinkedList *list)
 	return count;
 }
 
-void List_clear(LinkedList *list)
+void LinkedList_clear(LinkedList *list)
 {
 	for(ListNode *curr = list->first ; curr != NULL; curr = curr->next)
 	{
@@ -92,7 +92,7 @@ void List_clear(LinkedList *list)
 	}
 }
 
-void List_clear_and_destroy(LinkedList *list)
+void LinkedList_clear_and_destroy(LinkedList *list)
 {
 	ListNode *node = list->first;
 	while(node != NULL)
