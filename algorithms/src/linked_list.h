@@ -10,22 +10,36 @@ typedef struct ListNode {
 	void *value;
 } ListNode;
 
-typedef struct List {
+typedef struct LinkedList {
 	ListNode *first;
-} List;
+} LinkedList;
 
-List *List_create();
+LinkedList *List_create();
 
-void List_destroy(List *list);
+void List_destroy(LinkedList *list);
 
-void List_add(List *list, void *item);
+void List_add(LinkedList *list, void *item);
 
-void List_clear(List *list);
+void List_clear(LinkedList *list);
 
-void List_clear_and_destroy(List *list);
+void List_clear_and_destroy(LinkedList *list);
 
-void *List_find_index(List *list, int index);
+void *List_find_at(LinkedList *list, int index);
 
-int List_count(List *list);
+int List_count(LinkedList *list);
+
+//void List_delete_at(LinkedList *list, int i);
+
+//bool List_exists(void *value);
+
+//bool List_delete_after(void *value);
+
+//bool List_insert_at(int i, void *value);
+
+//bool List_insert_after(void *value, void *value);
+
+//bool List_remove_matching(LinkedList *list, List_value_compare comparer);
+
+//void List_reverse(List* list);
 
 #endif
