@@ -28,7 +28,7 @@ void *LinkedList_find_at(LinkedList *list, int index);
 
 int LinkedList_count(LinkedList *list);
 
-//void List_delete_at(LinkedList *list, int i);
+void LinkedList_delete_at(LinkedList *list, int index);
 
 //bool List_exists(void *value);
 

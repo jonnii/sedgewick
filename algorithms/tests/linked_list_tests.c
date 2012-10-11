@@ -120,7 +120,6 @@ char *test_clear()
 	mu_assert(list->first->value == NULL, "The first item is still assigned");
 
 	LinkedList_destroy(list);
-
 	return NULL;
 }
 
@@ -142,7 +141,6 @@ char *test_count_empty()
 	mu_assert(count == 0, "should not have any count")
 
 	LinkedList_clear_and_destroy(list);
-
 	return NULL;
 }
 
@@ -154,7 +152,68 @@ char *test_count()
 	mu_assert(count == 10, "should have count of 10")
 
 	LinkedList_clear_and_destroy(list);
+	return NULL;
+}
 
+char *test_delete_at_empty()
+{
+	LinkedList *list = LinkedList_create();
+
+	LinkedList_delete_at(list, 0);
+	mu_assert(LinkedList_count(list) == 0, "didnt find correct count");
+
+	LinkedList_clear_and_destroy(list);
+	return NULL;
+}
+
+char *test_delete_at_start()
+{
+	LinkedList *list = create_list_with_items(3);
+
+	LinkedList_delete_at(list, 0);
+
+	int value = *((int*)LinkedList_find_at(list, 0));
+	mu_assert(value == 1, "didn't find the right value");	
+	mu_assert(LinkedList_count(list) == 2, "didnt find correct count");
+
+	LinkedList_clear_and_destroy(list);
+	return NULL;
+}
+
+char *test_delete_at_middle()
+{
+	LinkedList *list = create_list_with_items(8);
+
+	LinkedList_delete_at(list, 4);
+
+	int value = *((int*)LinkedList_find_at(list, 4));
+	mu_assert(value == 5, "didn't find the right value");	
+	mu_assert(LinkedList_count(list) == 7, "didnt find correct count");
+
+	LinkedList_clear_and_destroy(list);
+	return NULL;
+}
+
+char *test_delete_at_end()
+{
+	LinkedList *list = create_list_with_items(8);
+
+	LinkedList_delete_at(list, 7);
+
+	mu_assert(LinkedList_count(list) == 7, "didnt find correct count");
+	mu_assert(LinkedList_find_at(list, 7) == NULL, "had value at 7th place");
+
+	LinkedList_clear_and_destroy(list);
+	return NULL;
+}
+
+char *test_delete_at_after()
+{
+	LinkedList *list = create_list_with_items(8);
+
+	LinkedList_delete_at(list, 10);
+
+	LinkedList_clear_and_destroy(list);
 	return NULL;
 }
 
@@ -174,6 +233,11 @@ char *all_tests()
 	mu_run_test(test_find_index_greater_than_list_size);
 	mu_run_test(test_count_empty);
 	mu_run_test(test_count);
+	mu_run_test(test_delete_at_empty);
+	mu_run_test(test_delete_at_start);
+	mu_run_test(test_delete_at_middle);
+	mu_run_test(test_delete_at_end);
+	mu_run_test(test_delete_at_after);
 
 	return NULL;
 }

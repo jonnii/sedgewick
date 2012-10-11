@@ -75,12 +75,50 @@ int LinkedList_count(LinkedList *list)
 	ListNode *node = list->first;
 	int count = 0;
 	
-	while(node != NULL){
+	while(node != NULL)
+	{
 		node = node->next;
 		++count;
 	}
 
 	return count;
+}
+
+void LinkedList_delete_at(LinkedList *list, int index)
+{
+	if(list->first == NULL)
+	{
+		return;
+	}
+
+	ListNode *curr = list->first;
+
+	if(index == 0)
+	{		
+		list->first = curr->next;
+		free(curr->value);
+		free(curr);
+	}
+	else
+	{
+		for(int i = 0 ; i < index - 1; ++i)
+		{
+			curr = curr->next;
+			
+			if(curr == NULL)
+			{
+				return;
+			}
+		}
+		
+		ListNode *temp = curr->next;
+
+		curr->next = curr->next->next;
+		curr = curr->next;
+
+		free(temp->value);
+		free(temp);
+	}
 }
 
 void LinkedList_clear(LinkedList *list)
