@@ -32,14 +32,27 @@ void List_add(List *list, void *item)
 	check_debug(item != NULL, "Cannot add a NULL item");
 
 	ListNode *node = ListNode_create(item);
-	list->first = node;
+	if(list->first == NULL)
+	{
+		list->first = node;
+	}
+	else
+	{
+		ListNode *curr = list->first;
+		while(curr->next != NULL)
+		{
+			curr = curr->next;
+		}
+		curr->next = node;
+	}
 error:
 	log_err("Could not add an item to the list");
 }
 
 void List_clear(List *list)
 {
-	for(ListNode *curr = list->first ; curr != NULL; curr = curr->next) {
+	for(ListNode *curr = list->first ; curr != NULL; curr = curr->next)
+	{
 		free(curr->value);
 		curr->value = NULL;
 	}
@@ -48,7 +61,8 @@ void List_clear(List *list)
 void List_clear_and_destroy(List *list)
 {
 	ListNode *node = list->first;
-	while(node != NULL) {
+	while(node != NULL)
+	{
 		ListNode *temp = node;
 		node = node->next;
 

@@ -37,6 +37,19 @@ char *test_add()
 	return NULL;
 }
 
+char *test_add_multiple()
+{
+	List *list = List_create();
+	void *data = make_test_data();
+	List_add(list, make_test_data());
+	List_add(list, data);
+
+	mu_assert(list->first->next->value == data, "Did not set data correctly");
+
+	List_clear_and_destroy(list);
+	return NULL;	
+}
+
 char *test_clear_empty()
 {
 	List *list = List_create();
@@ -80,6 +93,7 @@ char *all_tests()
 	mu_run_test(test_clear_empty);
 	mu_run_test(test_clear);
 	mu_run_test(test_clear_and_destroy);
+	mu_run_test(test_add_multiple);
 
 	return NULL;
 }
