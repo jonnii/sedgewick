@@ -132,6 +132,30 @@ char *test_clear_and_destroy()
 	return NULL;
 }
 
+char *test_count_empty()
+{
+	List *list = List_create();
+
+	int count = List_count(list);
+	mu_assert(count == 0, "should not have any count")
+
+	List_clear_and_destroy(list);
+
+	return NULL;
+}
+
+char *test_count()
+{
+	List *list = create_list_with_items(10);
+
+	int count = List_count(list);
+	mu_assert(count == 10, "should have count of 10")
+
+	List_clear_and_destroy(list);
+
+	return NULL;
+}
+
 char *all_tests()
 {
 	mu_suite_start();
@@ -146,6 +170,8 @@ char *all_tests()
 	mu_run_test(test_find_at_index);
 	mu_run_test(test_find_at_index_on_empty_list);
 	mu_run_test(test_find_index_greater_than_list_size);
+	mu_run_test(test_count_empty);
+	mu_run_test(test_count);
 
 	return NULL;
 }

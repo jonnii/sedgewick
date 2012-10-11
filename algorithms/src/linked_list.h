@@ -26,4 +26,6 @@ void List_clear_and_destroy(List *list);
 
 void *List_find_index(List *list, int index);
 
+int List_count(List *list);
+
 #endif

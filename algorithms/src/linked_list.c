@@ -70,6 +70,19 @@ void *List_find_index(List *list, int index)
 	return node->value;
 }
 
+int List_count(List *list)
+{
+	ListNode *node = list->first;
+	int count = 0;
+	
+	while(node != NULL){
+		node = node->next;
+		++count;
+	}
+
+	return count;
+}
+
 void List_clear(List *list)
 {
 	for(ListNode *curr = list->first ; curr != NULL; curr = curr->next)
