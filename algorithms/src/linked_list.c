@@ -104,7 +104,7 @@ void LinkedList_delete_at(LinkedList *list, int index)
 		for(int i = 0 ; i < index - 1; ++i)
 		{
 			curr = curr->next;
-			
+
 			if(curr == NULL)
 			{
 				return;
@@ -119,6 +119,24 @@ void LinkedList_delete_at(LinkedList *list, int index)
 		free(temp->value);
 		free(temp);
 	}
+}
+
+int LinkedList_index_of(LinkedList *list, void *value)
+{
+	ListNode *curr = list->first;
+	int index = 0;
+	while(curr != NULL)
+	{
+		if(curr->value == value)
+		{
+			return index;
+		}
+
+		curr = curr->next;
+		++index;
+	}
+
+	return -1;
 }
 
 void LinkedList_clear(LinkedList *list)

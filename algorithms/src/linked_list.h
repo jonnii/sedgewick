@@ -30,7 +30,7 @@ int LinkedList_count(LinkedList *list);
 
 void LinkedList_delete_at(LinkedList *list, int index);
 
-//bool List_exists(void *value);
+int LinkedList_index_of(LinkedList *list, void *value);
 
 //bool List_delete_after(void *value);
 

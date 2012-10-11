@@ -217,6 +217,30 @@ char *test_delete_at_after()
 	return NULL;
 }
 
+char *test_index_of_not_found()
+{
+	LinkedList *list = create_list_with_items(8);	
+
+	int index = LinkedList_index_of(list, make_test_data(5000));
+	mu_assert(index == -1, "expected -1 when index of not found");
+
+	LinkedList_clear_and_destroy(list);
+	return NULL;
+}
+
+char *test_index_of()
+{
+	LinkedList *list = create_list_with_items(5);
+	void *data = make_test_data(30);
+	LinkedList_add(list, data);
+
+	int index = LinkedList_index_of(list, data);
+	mu_assert(index == 5, "didnt find correct index");
+
+	LinkedList_clear_and_destroy(list);
+	return NULL;
+}
+
 char *all_tests()
 {
 	mu_suite_start();
@@ -238,6 +262,8 @@ char *all_tests()
 	mu_run_test(test_delete_at_middle);
 	mu_run_test(test_delete_at_end);
 	mu_run_test(test_delete_at_after);
+	mu_run_test(test_index_of_not_found);
+	mu_run_test(test_index_of);
 
 	return NULL;
 }
