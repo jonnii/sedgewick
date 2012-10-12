@@ -25,7 +25,10 @@ list_p create_list_with_items(int numItems)
 char *test_create()
 {
 	list_p list = list_create();
+
 	mu_assert(list != NULL, "Could not create list");
+	mu_assert(list->length == 0, "length should be 0")
+
 	return NULL;
 }
 
@@ -107,6 +110,8 @@ char *test_clear_empty()
 
 	list_clear(list);
 	
+	mu_assert(list->length == 0, "list should be empty");
+
 	return NULL;
 }
 
@@ -118,6 +123,7 @@ char *test_clear()
 	list_clear(list);
 
 	mu_assert(list->first->value == NULL, "The first item is still assigned");
+	mu_assert(list->length == 0, "list should be empty");
 
 	list_destroy(list);
 	return NULL;
@@ -133,23 +139,21 @@ char *test_clear_and_destroy()
 	return NULL;
 }
 
-char *test_count_empty()
+char *test_length_empty()
 {
 	list_p list = list_create();
 
-	int count = list_count(list);
-	mu_assert(count == 0, "should not have any count")
+	mu_assert(list->length == 0, "should not have any length")
 
 	list_clear_and_destroy(list);
 	return NULL;
 }
 
-char *test_count()
+char *test_length()
 {
 	list_p list = create_list_with_items(10);
 
-	int count = list_count(list);
-	mu_assert(count == 10, "should have count of 10")
+	mu_assert(list->length == 10, "should have length of 10")
 
 	list_clear_and_destroy(list);
 	return NULL;
@@ -160,7 +164,7 @@ char *test_delete_at_empty()
 	list_p list = list_create();
 
 	list_delete_at(list, 0);
-	mu_assert(list_count(list) == 0, "didnt find correct count");
+	mu_assert(list->length == 0, "didnt find correct length");
 
 	list_clear_and_destroy(list);
 	return NULL;
@@ -174,7 +178,7 @@ char *test_delete_at_start()
 
 	int value = *((int*)list_find_at(list, 0));
 	mu_assert(value == 1, "didn't find the right value");	
-	mu_assert(list_count(list) == 2, "didnt find correct count");
+	mu_assert(list->length == 2, "didnt find correct length");
 
 	list_clear_and_destroy(list);
 	return NULL;
@@ -188,7 +192,7 @@ char *test_delete_at_middle()
 
 	int value = *((int*)list_find_at(list, 4));
 	mu_assert(value == 5, "didn't find the right value");	
-	mu_assert(list_count(list) == 7, "didnt find correct count");
+	mu_assert(list->length == 7, "didnt find correct length");
 
 	list_clear_and_destroy(list);
 	return NULL;
@@ -200,7 +204,7 @@ char *test_delete_at_end()
 
 	list_delete_at(list, 7);
 
-	mu_assert(list_count(list) == 7, "didnt find correct count");
+	mu_assert(list->length == 7, "didnt find correct length");
 	mu_assert(list_find_at(list, 7) == NULL, "had value at 7th place");
 
 	list_clear_and_destroy(list);
@@ -255,8 +259,8 @@ char *all_tests()
 	mu_run_test(test_find_at_index);
 	mu_run_test(test_find_at_index_on_empty_list);
 	mu_run_test(test_find_index_greater_than_list_size);
-	mu_run_test(test_count_empty);
-	mu_run_test(test_count);
+	mu_run_test(test_length_empty);
+	mu_run_test(test_length);
 	mu_run_test(test_delete_at_empty);
 	mu_run_test(test_delete_at_start);
 	mu_run_test(test_delete_at_middle);

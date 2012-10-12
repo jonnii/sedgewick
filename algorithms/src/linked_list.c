@@ -34,6 +34,7 @@ void list_add(list_p list, void *item)
 		}
 		curr->next = node;
 	}
+	list->length++;
 }
 
 void *list_find_at(list_p list, int index)
@@ -55,20 +56,6 @@ void *list_find_at(list_p list, int index)
 	}
 
 	return node->value;
-}
-
-int list_count(list_p list)
-{
-	list_node *node = list->first;
-	int count = 0;
-	
-	while(node != NULL)
-	{
-		node = node->next;
-		++count;
-	}
-
-	return count;
 }
 
 void list_delete_at(list_p list, int index)
@@ -106,6 +93,8 @@ void list_delete_at(list_p list, int index)
 		free(temp->value);
 		free(temp);
 	}
+
+	list->length--;
 }
 
 int list_index_of(list_p list, void *value)
@@ -133,6 +122,8 @@ void list_clear(list_p list)
 		free(curr->value);
 		curr->value = NULL;
 	}
+
+	list->length = 0;
 }
 
 void list_clear_and_destroy(list_p list)
@@ -147,5 +138,6 @@ void list_clear_and_destroy(list_p list)
 		free(temp);
 	}
 
+	list->length = 0;
 	list->first = NULL;
 }

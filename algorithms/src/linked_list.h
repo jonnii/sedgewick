@@ -10,6 +10,7 @@ typedef struct list_node {
 
 struct list {
 	list_node *first;
+	int length;
 };
 
 typedef struct list* list_p;
@@ -25,8 +26,6 @@ void list_clear(list_p list);
 void list_clear_and_destroy(list_p list);
 
 void *list_find_at(list_p list, int index);
-
-int list_count(list_p list);
 
 void list_delete_at(list_p list, int index);
 
