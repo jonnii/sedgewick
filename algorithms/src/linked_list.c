@@ -1,14 +1,9 @@
 #include "linked_list.h"
-#include "dbg.h"
 
 list_p list_create()
 {
 	list_p list = calloc(1, sizeof(struct list));
-	check_mem(list);
 	return list; 
-error:
-	log_err("Could not allocate memory for list");
-	return NULL;
 }
 
 void list_destroy(list_p list)
@@ -19,19 +14,12 @@ void list_destroy(list_p list)
 list_node *ListNode_create(void *item)
 {
 	list_node *node = calloc(1, sizeof(list_node));
-	check_mem(node);
 	node->value = item;
 	return node;
-error:
-	log_err("Could not allocate memory for list node");
-	return NULL;
 }
 
 void list_add(list_p list, void *item)
 {
-	check_debug(list != NULL, "Cannot add an item to a NULL list");
-	check_debug(item != NULL, "Cannot add a NULL item");
-
 	list_node *node = ListNode_create(item);
 	if(list->first == NULL)
 	{
@@ -46,8 +34,6 @@ void list_add(list_p list, void *item)
 		}
 		curr->next = node;
 	}
-error:
-	log_err("Could not add an item to the list");
 }
 
 void *list_find_at(list_p list, int index)
