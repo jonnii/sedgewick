@@ -6,3 +6,5 @@ algorithms/src/*.o
 1.1/experiment_1_1_35
 
 algorithms/tests/linked_list_tests
+
+algorithms/tests/list_tests

@@ -2,8 +2,7 @@
 
 list_p list_create()
 {
-	list_p list = calloc(1, sizeof(struct list));
-	return list; 
+	return calloc(1, sizeof(struct list));
 }
 
 void list_destroy(list_p list)
