@@ -3,6 +3,8 @@
 
 #include <stdlib.h>
 
+typedef void *(*retain_release_p)(void *data);
+
 struct vector {
   size_t length;
   size_t capacity;
@@ -17,6 +19,8 @@ typedef struct vector* vector_p;
 vector_p vector_create();
 
 vector_p vector_create_with_capacity(int capacity);
+
+void vector_copy_retain_policy(vector_p vector, retain_release_p policy);
 
 void vector_destroy(vector_p vector);
 

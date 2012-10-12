@@ -50,16 +50,36 @@ char *test_add()
   return NULL;
 }
 
+void *retain_int(void *data)
+{
+  void *target = malloc(sizeof(int));
+  memcpy(target, data, sizeof(int));
+  return target;  
+}
+
+char *test_set_copy_retain_policy()
+{
+  vector_p vector = vector_create();
+  vector_copy_retain_policy(vector, retain_int);
+
+  mu_assert(vector->retain_policy != NULL, "didnt set retain policy");
+  mu_assert(vector->release_policy != NULL, "didnt set release policy");
+
+  vector_destroy(vector);
+  return NULL;
+}
+
 char *test_add_with_retain_policy()
 {
   vector_p vector = vector_create();
+  vector_copy_retain_policy(vector, retain_int);
 
   int *original = make_test_data(1);
   vector_add(vector, original);
   int *got = (int*)vector_get(vector, 0);
 
   mu_assert(*got == 1, "expected same value");
-  //mu_assert(got != original, "shouldn't get same data back");
+  mu_assert(got != original, "shouldn't get same data back");
 
   vector_destroy(vector);
   
@@ -85,6 +105,7 @@ char *all_tests()
   mu_run_test(test_create);
   mu_run_test(test_create_with_capacity);
   mu_run_test(test_add);
+  mu_run_test(test_set_copy_retain_policy);
   mu_run_test(test_add_with_retain_policy);
   mu_run_test(test_get);
 

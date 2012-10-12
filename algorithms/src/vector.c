@@ -24,12 +24,10 @@ void vector_destroy(vector_p vector)
   free(vector);
 }
 
-void vector_copy_retain_policy(vector_p vector)
+void vector_copy_retain_policy(vector_p vector, retain_release_p policy)
 {
-  //void *target = malloc(size);
-  //memcpy(target, data, size);  
-  //vector->retain_policy
-  //vector->release_policy = free;
+  vector->retain_policy = policy;
+  vector->release_policy = free; 
 }
 
 void vector_add(vector_p vector, void *data)
