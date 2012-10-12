@@ -14,23 +14,23 @@ struct list {
 
 typedef struct list* list_p;
 
-list_p LinkedList_create();
+list_p list_create();
 
-void LinkedList_destroy(list_p list);
+void list_destroy(list_p list);
 
-void LinkedList_add(list_p list, void *item);
+void list_add(list_p list, void *item);
 
-void LinkedList_clear(list_p list);
+void list_clear(list_p list);
 
-void LinkedList_clear_and_destroy(list_p list);
+void list_clear_and_destroy(list_p list);
 
-void *LinkedList_find_at(list_p list, int index);
+void *list_find_at(list_p list, int index);
 
-int LinkedList_count(list_p list);
+int list_count(list_p list);
 
-void LinkedList_delete_at(list_p list, int index);
+void list_delete_at(list_p list, int index);
 
-int LinkedList_index_of(list_p list, void *value);
+int list_index_of(list_p list, void *value);
 
 //bool List_delete_after(void *value);
 

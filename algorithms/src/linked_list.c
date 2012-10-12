@@ -1,7 +1,7 @@
 #include "linked_list.h"
 #include "dbg.h"
 
-list_p LinkedList_create()
+list_p list_create()
 {
 	list_p list = calloc(1, sizeof(struct list));
 	check_mem(list);
@@ -11,12 +11,13 @@ error:
 	return NULL;
 }
 
-void LinkedList_destroy(list_p list)
+void list_destroy(list_p list)
 {
 	free(list);
 }
 
-list_node *ListNode_create(void *item){
+list_node *ListNode_create(void *item)
+{
 	list_node *node = calloc(1, sizeof(list_node));
 	check_mem(node);
 	node->value = item;
@@ -26,7 +27,7 @@ error:
 	return NULL;
 }
 
-void LinkedList_add(list_p list, void *item)
+void list_add(list_p list, void *item)
 {
 	check_debug(list != NULL, "Cannot add an item to a NULL list");
 	check_debug(item != NULL, "Cannot add a NULL item");
@@ -49,7 +50,7 @@ error:
 	log_err("Could not add an item to the list");
 }
 
-void *LinkedList_find_at(list_p list, int index)
+void *list_find_at(list_p list, int index)
 {
 	if(list->first == NULL)
 	{
@@ -70,7 +71,7 @@ void *LinkedList_find_at(list_p list, int index)
 	return node->value;
 }
 
-int LinkedList_count(list_p list)
+int list_count(list_p list)
 {
 	list_node *node = list->first;
 	int count = 0;
@@ -84,7 +85,7 @@ int LinkedList_count(list_p list)
 	return count;
 }
 
-void LinkedList_delete_at(list_p list, int index)
+void list_delete_at(list_p list, int index)
 {
 	if(list->first == NULL)
 	{
@@ -121,7 +122,7 @@ void LinkedList_delete_at(list_p list, int index)
 	}
 }
 
-int LinkedList_index_of(list_p list, void *value)
+int list_index_of(list_p list, void *value)
 {
 	list_node *curr = list->first;
 	int index = 0;
@@ -139,7 +140,7 @@ int LinkedList_index_of(list_p list, void *value)
 	return -1;
 }
 
-void LinkedList_clear(list_p list)
+void list_clear(list_p list)
 {
 	for(list_node *curr = list->first ; curr != NULL; curr = curr->next)
 	{
@@ -148,7 +149,7 @@ void LinkedList_clear(list_p list)
 	}
 }
 
-void LinkedList_clear_and_destroy(list_p list)
+void list_clear_and_destroy(list_p list)
 {
 	list_node *node = list->first;
 	while(node != NULL)
