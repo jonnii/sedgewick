@@ -6,6 +6,7 @@
 struct vector{
 	size_t length;
 	size_t capacity;
+	void **data;
 };
 
 typedef struct vector* vector_p;
