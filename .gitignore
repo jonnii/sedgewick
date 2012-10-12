@@ -8,3 +8,5 @@ algorithms/src/*.o
 algorithms/tests/linked_list_tests
 
 algorithms/tests/list_tests
+
+algorithms/tests/vector_tests
