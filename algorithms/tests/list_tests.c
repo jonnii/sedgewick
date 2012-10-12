@@ -1,5 +1,5 @@
 #include "minunit.h"
-#include <linked_list.h>
+#include <list.h>
 #include <assert.h>
 #include <string.h>
 

@@ -1,4 +1,4 @@
-#include "linked_list.h"
+#include "list.h"
 
 list_p list_create()
 {
