@@ -180,6 +180,35 @@ char *test_swap()
   return NULL;
 }
 
+char *test_remove()
+{
+  vector_p vector = vector_create(sizeof(int));
+
+  vector_add(vector, test_data(0));
+  vector_add(vector, test_data(1));
+  vector_add(vector, test_data(2));
+
+  vector_remove(vector, 1);
+
+  mu_assert(vector->length == 2, "should have a length of 2");
+  mu_assert(*(int*)vector_get(vector, 1) == 2, "should have removed item");
+
+  vector_destroy(vector);
+  return NULL;
+}
+
+char *test_remove_out_of_range()
+{
+  vector_p vector = vector_create(sizeof(int));
+
+  vector_remove(vector, 100);
+
+  mu_assert(vector->length == 0, "should be empty");
+
+  vector_destroy(vector);
+  return NULL;
+}
+
 char *all_tests()
 {
   mu_suite_start();
@@ -195,6 +224,8 @@ char *all_tests()
   mu_run_test(test_set);
   mu_run_test(test_set_out_of_range);
   mu_run_test(test_swap);
+  mu_run_test(test_remove);
+  mu_run_test(test_remove_out_of_range);
 
   return NULL;
 }

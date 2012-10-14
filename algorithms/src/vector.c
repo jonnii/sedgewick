@@ -113,3 +113,23 @@ int vector_swap(vector_p vector, int i, int j)
   vector->data[i] = temp;
   return 1;
 }
+
+void vector_remove(vector_p vector, size_t index)
+{
+  if(index > vector->length)
+  {
+    return;
+  }
+
+  if(vector->free_element)
+  {
+    vector->free_element(vector->data[index]);
+  }
+
+  for(size_t i = index; i < vector->length ; ++i)
+  {
+    vector->data[i] = vector->data[i+1];
+  }
+
+  --vector->length;
+}
