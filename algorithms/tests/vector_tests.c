@@ -163,6 +163,23 @@ char *test_set_out_of_range()
   return NULL;
 }
 
+char *test_swap()
+{
+  vector_p vector = vector_create(sizeof(int));
+
+  vector_add(vector, test_data(0));
+  vector_add(vector, test_data(1));
+
+  int swapped = vector_swap(vector, 0, 1);
+
+  mu_assert(swapped, "expected to have swapped");
+  mu_assert(*(int*)vector_get(vector, 0) == 1, "expected 1");
+  mu_assert(*(int*)vector_get(vector, 1) == 0, "expected 0");
+
+  vector_destroy(vector);
+  return NULL;
+}
+
 char *all_tests()
 {
   mu_suite_start();
@@ -177,6 +194,7 @@ char *all_tests()
   mu_run_test(test_get);
   mu_run_test(test_set);
   mu_run_test(test_set_out_of_range);
+  mu_run_test(test_swap);
 
   return NULL;
 }

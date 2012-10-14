@@ -105,3 +105,11 @@ int vector_set(vector_p vector, size_t index, void *data)
   
   return 1;
 }
+
+int vector_swap(vector_p vector, int i, int j)
+{
+  void *temp = vector->data[j];
+  vector->data[j] = vector->data[i];
+  vector->data[i] = temp;
+  return 1;
+}
