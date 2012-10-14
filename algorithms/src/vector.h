@@ -33,7 +33,7 @@ int vector_set(vector_p, size_t index, void *data);
 
 void vector_remove(vector_p vector, size_t index);
 
-//int vector_insert(vector_p, size_t index, void *data);
+int vector_insert(vector_p vector, size_t index, void *data);
 
 int vector_swap(vector_p vector, int i, int j);
 

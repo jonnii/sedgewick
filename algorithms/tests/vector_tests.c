@@ -209,6 +209,38 @@ char *test_remove_out_of_range()
   return NULL;
 }
 
+char *test_insert_at_beginning()
+{
+  vector_p vector = vector_create(sizeof(int));
+  vector_add(vector, test_data(1));
+
+  int did_insert = vector_insert(vector, 0, test_data(0));
+
+  mu_assert(vector->length == 2, "should have a length of 2");
+  mu_assert(did_insert, "should have inserted");
+  mu_assert(*(int*)vector_get(vector, 0) == 0, "should have added item at start");
+  mu_assert(*(int*)vector_get(vector, 1) == 1, "should have moved other items");
+  
+  vector_destroy(vector);
+  return NULL;
+}
+
+char *test_insert_at_end()
+{
+  vector_p vector = vector_create(sizeof(int));
+  vector_add(vector, test_data(0));
+  vector_add(vector, test_data(1));
+
+  int did_insert = vector_insert(vector, 2, test_data(2));
+
+  mu_assert(vector->length == 3, "should have a length of 3");
+  mu_assert(did_insert, "should have inserted");
+  mu_assert(*(int*)vector_get(vector, 2) == 2, "should have added item at end");
+  
+  vector_destroy(vector);
+  return NULL;
+}
+
 char *all_tests()
 {
   mu_suite_start();
@@ -226,6 +258,8 @@ char *all_tests()
   mu_run_test(test_swap);
   mu_run_test(test_remove);
   mu_run_test(test_remove_out_of_range);
+  mu_run_test(test_insert_at_beginning);
+  mu_run_test(test_insert_at_end);
 
   return NULL;
 }

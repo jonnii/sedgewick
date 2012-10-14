@@ -66,12 +66,17 @@ void *vector_get_element_data(vector_p vector, void *data)
   return element;
 }
 
-void vector_add(vector_p vector, void *data)
+void vector_maybe_expand(vector_p vector)
 {
   if(vector->length == vector->capacity)
   {
     vector_expand(vector);
   }
+}
+
+void vector_add(vector_p vector, void *data)
+{
+  vector_maybe_expand(vector);
 
   int offset = vector->length;
   
@@ -132,4 +137,19 @@ void vector_remove(vector_p vector, size_t index)
   }
 
   --vector->length;
+}
+
+int vector_insert(vector_p vector, size_t index, void *data)
+{
+  vector_maybe_expand(vector);
+
+  for(size_t i = vector->length; i > index; i--)
+  {
+    vector->data[i] = vector->data[i-1];
+  }
+
+  vector->length++;
+  vector->data[index] = vector_get_element_data(vector, data);
+
+  return 1; 
 }
