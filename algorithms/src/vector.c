@@ -74,6 +74,15 @@ void vector_maybe_expand(vector_p vector)
   }
 }
 
+void vector_maybe_contract(vector_p vector)
+{
+  if(vector->length -1 < vector->capacity / 4)
+  {
+    vector->capacity /= 4;
+    vector->data = (void**) realloc (vector->data, sizeof(void*) * vector->capacity);
+  }
+}
+
 void vector_add(vector_p vector, void *data)
 {
   vector_maybe_expand(vector);
@@ -137,6 +146,8 @@ void vector_remove(vector_p vector, size_t index)
   }
 
   --vector->length;
+
+  vector_maybe_contract(vector);
 }
 
 int vector_insert(vector_p vector, size_t index, void *data)

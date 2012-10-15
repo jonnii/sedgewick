@@ -197,6 +197,26 @@ char *test_remove()
   return NULL;
 }
 
+char *test_remove_and_resize()
+{
+  vector_p vector = vector_create(sizeof(int));
+
+  for(int i = 0 ; i < 80 ; ++i)
+  {
+    vector_add(vector, test_data(i));
+  }
+
+  for(int i = 0 ; i < 60 ; ++i)
+  {
+    vector_remove(vector, 0);
+  }
+
+  mu_assert(vector->capacity == 20, "should have reduced capacity");
+
+  vector_destroy(vector);
+  return NULL;
+}
+
 char *test_remove_out_of_range()
 {
   vector_p vector = vector_create(sizeof(int));
@@ -257,6 +277,7 @@ char *all_tests()
   mu_run_test(test_set_out_of_range);
   mu_run_test(test_swap);
   mu_run_test(test_remove);
+  mu_run_test(test_remove_and_resize);
   mu_run_test(test_remove_out_of_range);
   mu_run_test(test_insert_at_beginning);
   mu_run_test(test_insert_at_end);
