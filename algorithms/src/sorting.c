@@ -54,7 +54,6 @@ void sort_shell(vector_p vector, comparator_p comparator)
   size_t n = vector->length;
   size_t h = 1;
   
-  // pick a shell size
   while(h < n / 3)
   {
     h = (3 * h) + 1;
@@ -69,7 +68,7 @@ void sort_shell(vector_p vector, comparator_p comparator)
         vector_swap(vector, j, j-h);
       }
     }
-    
+
     h = h/3;
   }
 }
