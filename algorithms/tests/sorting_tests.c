@@ -62,7 +62,6 @@ char *test_insertion_sort()
   mu_assert(check_sorted(vector, compare) == 1, "should have been sorted");
 
   vector_destroy(vector);
-
   return NULL;
 }
 
@@ -74,7 +73,17 @@ char *test_shell_sort()
   mu_assert(check_sorted(vector, compare) == 1, "should have been sorted");
 
   vector_destroy(vector);
+  return NULL;
+}
 
+char *test_merge_sort()
+{
+  vector_p vector = make_vector();
+
+  sort_merge(vector, compare);
+  mu_assert(check_sorted(vector, compare) == 1, "should have been sorted");
+
+  vector_destroy(vector);
   return NULL;
 }
 
@@ -86,6 +95,7 @@ char *all_tests()
   mu_run_test(test_selection_sort);
   mu_run_test(test_insertion_sort);
   mu_run_test(test_shell_sort);
+  mu_run_test(test_merge_sort);
 
   return NULL;
 }

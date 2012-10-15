@@ -72,3 +72,26 @@ void sort_shell(vector_p vector, comparator_p comparator)
     h = h/3;
   }
 }
+
+void merge(vector_p vector, comparator_p comparator, int lo, int mid, int hi)
+{
+
+}
+
+void sort_merge_range(vector_p vector, comparator_p comparator, int lo, int hi)
+{
+  if(hi <= lo)
+  {
+    return;
+  }
+
+  int mid = lo + (hi - lo) / 2;
+  sort_merge_range(vector, comparator, lo, mid);
+  sort_merge_range(vector, comparator, mid + 1, hi);
+  merge(vector, comparator, lo, mid, hi);
+}
+
+void sort_merge(vector_p vector, comparator_p comparator)
+{
+  sort_merge_range(vector, comparator, 0, vector->length - 1);
+}

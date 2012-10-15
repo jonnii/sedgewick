@@ -13,4 +13,6 @@ void sort_insertion(vector_p vector, comparator_p comparator);
 
 void sort_shell(vector_p vector, comparator_p comparator);
 
+void sort_merge(vector_p vector, comparator_p comparator);
+
 #endif
