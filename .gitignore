@@ -10,3 +10,5 @@ algorithms/tests/linked_list_tests
 algorithms/tests/list_tests
 
 algorithms/tests/vector_tests
+
+algorithms/tests/sorting_tests
