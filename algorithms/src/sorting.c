@@ -1,4 +1,6 @@
 #include "sorting.h"
+#include <string.h>
+#include <stdio.h>
 
 int check_sorted(vector_p vector, comparator_p comparator)
 {
@@ -73,12 +75,38 @@ void sort_shell(vector_p vector, comparator_p comparator)
   }
 }
 
-void merge(vector_p vector, comparator_p comparator, int lo, int mid, int hi)
+void merge(void **temp, vector_p vector, comparator_p comparator, int lo, int mid, int hi)
 {
+  int i = lo;
+  int j = mid + 1;
 
+  for(int k = lo; k <= hi; k++)
+  {
+    temp[k] = vector->data[k];
+  }
+  
+  for(int k = lo; k <= hi; k++)
+  {
+    if(i > mid)
+    {
+      vector->data[k] = temp[j++];
+    }
+    else if(j > hi)
+    {
+      vector->data[k] = temp[i++];
+    }
+    else if(comparator(temp[j], temp[i]) < 0)
+    {
+      vector->data[k] = temp[j++];
+    }
+    else
+    {
+      vector->data[k] = temp[i++];
+    }
+  }
 }
 
-void sort_merge_range(vector_p vector, comparator_p comparator, int lo, int hi)
+void sort_merge_range(void **temp, vector_p vector, comparator_p comparator, int lo, int hi)
 {
   if(hi <= lo)
   {
@@ -86,12 +114,15 @@ void sort_merge_range(vector_p vector, comparator_p comparator, int lo, int hi)
   }
 
   int mid = lo + (hi - lo) / 2;
-  sort_merge_range(vector, comparator, lo, mid);
-  sort_merge_range(vector, comparator, mid + 1, hi);
-  merge(vector, comparator, lo, mid, hi);
+    
+  sort_merge_range(temp, vector, comparator, lo, mid);
+  sort_merge_range(temp, vector, comparator, mid + 1, hi);
+  merge(temp, vector, comparator, lo, mid, hi);
 }
 
 void sort_merge(vector_p vector, comparator_p comparator)
 {
-  sort_merge_range(vector, comparator, 0, vector->length - 1);
+  void** copy = calloc(vector->length, sizeof(void**));
+  sort_merge_range(copy, vector, comparator, 0, vector->length - 1);
+  free(copy);
 }
