@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "minunit.h"
 #include "../src/vector.h"
@@ -15,11 +16,11 @@ int *test_data(int value)
 vector_p make_vector()
 {
   vector_p vector = vector_create(sizeof(int));
-  vector_add(vector, test_data(5));
-  vector_add(vector, test_data(3));
-  vector_add(vector, test_data(2));
-  vector_add(vector, test_data(4));
-  vector_add(vector, test_data(1));
+  for(int i = 0 ; i < 100 ; i++)
+  {
+    int random = rand() % 100;
+    vector_add(vector, test_data(random));
+  }
   return vector;
 }
 
