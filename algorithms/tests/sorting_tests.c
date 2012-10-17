@@ -101,6 +101,17 @@ char *test_merge_bu_sort()
   return NULL;
 }
 
+char *test_quicksort()
+{
+  vector_p vector = make_vector();
+
+  sort_quicksort(vector, compare);
+  mu_assert(check_sorted(vector, compare) == 1, "should have been sorted");
+
+  vector_destroy(vector);
+  return NULL;
+}
+
 char *all_tests()
 {
   mu_suite_start();

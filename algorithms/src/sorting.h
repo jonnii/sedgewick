@@ -17,4 +17,6 @@ void sort_merge(vector_p vector, comparator_p comparator);
 
 void sort_merge_bu(vector_p vector, comparator_p comparator);
 
+void sort_quicksort(vector_p vector, comparator_p comparator);
+
 #endif

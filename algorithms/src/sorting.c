@@ -144,3 +144,61 @@ void sort_merge_bu(vector_p vector, comparator_p comparator)
   
   free(temp);
 }
+
+int partition(vector_p vector, int lo, int hi, comparator_p comparator)
+{
+  int i = lo;
+  int j = hi + 1;
+  void *v = vector_get(vector, lo);
+
+  while(1)
+  {
+    // scan left
+    while(comparator(vector_get(vector, ++i), v) < 0)
+    {
+      if(i == hi)
+      {
+        break;
+      }
+    }
+
+    // scan right
+    while(comparator(v, vector_get(vector, --j)) < 0)
+    {
+      if(j == lo)
+      {
+        break;
+      }
+    }
+
+    if(i >= j)
+    {
+      break;
+    }
+
+    // exchange
+    vector_swap(vector, i, j);
+  }
+
+  // final exchange to put pivot in correct place
+  vector_swap(vector, lo, j);
+
+  return j;
+}
+
+void quicksort(vector_p vector, int lo, int hi, comparator_p comparator)
+{
+  if(hi <= lo)
+  {
+    return;
+  }
+
+  int j = partition(vector, lo, hi, comparator);
+  quicksort(vector, lo, j - 1, comparator);
+  quicksort(vector, j + 1, hi, comparator);
+}
+
+void sort_quicksort(vector_p vector, comparator_p comparator)
+{
+  quicksort(vector, 0, vector->length - 1, comparator);
+}
