@@ -132,6 +132,7 @@ void sort_merge_bu(vector_p vector, comparator_p comparator)
 {
   void** temp = calloc(vector->length, sizeof(void*));
   int n = vector->length;
+  
   for(int sz = 1; sz < n; sz = sz + sz)
   {
     for(int lo = 0 ; lo < n - sz; lo += sz + sz)
@@ -140,5 +141,6 @@ void sort_merge_bu(vector_p vector, comparator_p comparator)
       merge(temp, vector, comparator, lo, lo + sz - 1, hi);
     }
   }  
+  
   free(temp);
 }
