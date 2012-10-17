@@ -14,3 +14,4 @@ algorithms/tests/vector_tests
 algorithms/tests/sorting_tests
 
 algorithms/bin/benchmark
+algorithms/data
