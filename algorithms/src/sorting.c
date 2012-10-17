@@ -1,4 +1,5 @@
 #include "sorting.h"
+#include "math.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -122,7 +123,22 @@ void sort_merge_range(void **temp, vector_p vector, comparator_p comparator, int
 
 void sort_merge(vector_p vector, comparator_p comparator)
 {
-  void** copy = calloc(vector->length, sizeof(void**));
+  void** copy = calloc(vector->length, sizeof(void*));
   sort_merge_range(copy, vector, comparator, 0, vector->length - 1);
   free(copy);
+}
+
+void sort_merge_bu(vector_p vector, comparator_p comparator)
+{
+  void** temp = calloc(vector->length, sizeof(void*));
+  int n = vector->length;
+  for(int sz = 1; sz < n; sz = sz + sz)
+  {
+    for(int lo = 0 ; lo < n - sz; lo += sz + sz)
+    {
+      int hi = min(lo + sz + sz - 1, n - 1); 
+      merge(temp, vector, comparator, lo, lo + sz - 1, hi);
+    }
+  }  
+  free(temp);
 }
