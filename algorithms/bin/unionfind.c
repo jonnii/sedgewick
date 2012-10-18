@@ -78,7 +78,6 @@ void qu_connect(union_state_p state, int p, int q)
 	}
 
 	state->ids[i] = j;
-
 	state->num_components--;
 }
 
