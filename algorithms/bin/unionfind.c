@@ -6,6 +6,7 @@ struct union_state {
 	int num_components;
 	int num_ids;
 	int *ids;
+	int *sizes;
 };
 
 typedef struct union_state * union_state_p;
@@ -86,6 +87,31 @@ int qu_connected(union_state_p state, int p, int q)
 	return qu_find(state, p) == qu_find(state, q);
 }
 
+// weighted quick union
+
+void wqu_connect(union_state_p state, int p, int q)
+{
+	int i = qu_find(state, p);
+	int j = qu_find(state, q);
+
+	if(i == j)
+	{
+		return;
+	}
+
+	if(state->sizes[i] < state->sizes[j])
+	{
+		state->ids[i] = j;
+		state->sizes[j] += state->sizes[i];
+	}
+	else
+	{
+		state->ids[j] = i;
+		state->sizes[i] += state->sizes[j];
+	}
+
+	state->num_components--;
+}
 
 union_state_p run_union(union_algorithm_p algorithm, char *filename)
 {	
@@ -104,11 +130,13 @@ union_state_p run_union(union_algorithm_p algorithm, char *filename)
 	printf("reading num sites: %d\n", state->num_ids);
 
 	state->ids = calloc(state->num_ids, sizeof(int));
+	state->sizes = calloc(state->num_ids, sizeof(int));
 	state->num_components = state->num_ids;
 	
 	for(int i = 0 ; i < state->num_ids ; i++)
 	{
 		state->ids[i] = i;
+		state->sizes[i] = 1;
 	}
 
 	int p = 0;
@@ -149,15 +177,27 @@ union_algorithm_p create_quick_union()
 	return algo;
 }
 
+union_algorithm_p create_weighted_quick_union()
+{
+	union_algorithm_p algo = (union_algorithm_p)malloc(sizeof(struct union_algorithm));
+	algo->_connect = wqu_connect;
+	algo->_connected = qu_connected;
+	return algo;
+}
+
 union_algorithm_p create_algorithm(char *name)
 {
-	if(strncmp(name, "quickfind", 20) == 0)
+	if(strncmp(name, "qf", 5) == 0)
 	{
 		return create_quick_find();
 	}
-	else if(strncmp(name, "quickunion", 20) == 0)
+	else if(strncmp(name, "qu", 5) == 0)
 	{
 		return create_quick_union();
+	}
+	else if(strncmp(name, "wqu", 5) == 0)
+	{
+		return create_weighted_quick_union();
 	}
 	else
 	{
