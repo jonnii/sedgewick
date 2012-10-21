@@ -122,6 +122,7 @@ char *all_tests()
   mu_run_test(test_shell_sort);
   mu_run_test(test_merge_sort);
   mu_run_test(test_merge_bu_sort);
+  mu_run_test(test_quicksort);
 
   return NULL;
 }

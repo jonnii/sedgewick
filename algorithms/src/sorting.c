@@ -3,6 +3,11 @@
 #include <string.h>
 #include <stdio.h>
 
+int compare_intp(void *i, void *j)
+{
+  return *((int*)i) - *((int*)j);
+}
+
 int check_sorted(vector_p vector, comparator_p comparator)
 {
   for(size_t n = 1 ; n < vector->length; n++)
@@ -114,10 +119,31 @@ void sort_merge_range(void **temp, vector_p vector, comparator_p comparator, int
     return;
   }
 
+  int range = hi - lo + 1;
+  if(range <= 15)
+  {
+    // use insertion sort for sub ranges less than 15 items. 
+    for(size_t i = 1; i < range; i++)
+    {
+      for(size_t j = i ; j > 0 && comparator(
+        vector_get(vector, lo + j), vector_get(vector, lo + j - 1)) < 0; j--)
+      {
+        vector_swap(vector, lo + j, lo + j - 1);
+      }
+    }
+
+    return;
+  }
+
   int mid = lo + (hi - lo) / 2;
     
   sort_merge_range(temp, vector, comparator, lo, mid);
   sort_merge_range(temp, vector, comparator, mid + 1, hi);
+  
+  if(comparator(vector_get(vector, mid), vector_get(vector, mid + 1)) < 0){
+    return;
+  }
+
   merge(temp, vector, comparator, lo, mid, hi);
 }
 
