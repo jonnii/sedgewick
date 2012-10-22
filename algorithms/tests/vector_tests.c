@@ -261,6 +261,22 @@ char *test_insert_at_end()
   return NULL;
 }
 
+char *test_copy_shallow()
+{
+  vector_p vector = vector_create(sizeof(int));
+  vector_add(vector, test_data(0));
+  vector_add(vector, test_data(1));
+
+  vector_p copy = vector_copy_shallow(vector);
+
+  mu_assert(vector->length == copy->length, "expected same length for clone");
+  mu_assert(*(int*)vector_get(copy, 1) == 1, "expected data to be copied");
+
+  vector_destroy(copy);
+  vector_destroy(vector);
+  return NULL;
+}
+
 char *all_tests()
 {
   mu_suite_start();
@@ -281,6 +297,7 @@ char *all_tests()
   mu_run_test(test_remove_out_of_range);
   mu_run_test(test_insert_at_beginning);
   mu_run_test(test_insert_at_end);
+  mu_run_test(test_copy_shallow);
 
   return NULL;
 }

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include <string.h>
 #include "../src/sorting.h"
 #include "../src/vector.h"
@@ -51,7 +52,24 @@ int main(int argc, char *argv[])
     printf("could not find a sorter for %s\n", argv[2]);
   }
 
-  sorter(vector, compare_intp);
+  int runs = 10;
+  float totalRunningTime = 0;
+  for(int i = 0 ; i < runs ; ++i)
+  {
+    vector_p copy = vector_copy_shallow(vector);
+    
+    float startedAt = (float)clock()/CLOCKS_PER_SEC;
+    sorter(copy, compare_intp);
+    float finishedAt = (float)clock()/CLOCKS_PER_SEC;
+
+    totalRunningTime += (finishedAt - startedAt);
+
+    vector_destroy(copy);
+  }
+
+  float averageRunningTime = totalRunningTime / runs;
+  printf("total running time %fms\n", totalRunningTime);
+  printf("average running time %fms over %d runs\n", averageRunningTime, runs);
 
   vector_destroy(vector);
   return 0;

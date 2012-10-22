@@ -36,6 +36,20 @@ void vector_destroy(vector_p vector)
   free(vector);
 }
 
+vector_p vector_copy_shallow(vector_p original)
+{
+  vector_p copy = vector_create_with_capacity(
+    original->element_size, 
+    original->capacity);
+
+  copy->create_element = original->create_element;
+  copy->free_element = original->free_element;
+  copy->length = original->length;
+  memcpy(copy->data, original->data, original->capacity * sizeof(void*));
+
+  return copy;
+}
+
 void *copy_element(vector_p vector, void *data)
 {
   void *target = malloc(vector->element_size);

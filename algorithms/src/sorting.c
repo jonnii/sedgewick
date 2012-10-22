@@ -44,17 +44,25 @@ void sort_selection(vector_p vector, comparator_p comparator)
   } 
 }
 
-void sort_insertion(vector_p vector, comparator_p comparator)
+void sort_sub_insertion(vector_p vector, comparator_p comparator, size_t lo, size_t hi)
 {
-  size_t n = vector->length;
+  size_t n = hi - lo;
 
   for(size_t i = 1; i < n; i++)
   {
-    for(size_t j = i ; j > 0 && comparator(vector->data[j], vector->data[j - 1]) < 0; j--)
+    for(size_t j = i ; j > 0 && comparator(
+        vector->data[lo + j], 
+        vector->data[lo + j - 1]) < 0; j--)
     {
-      vector_swap(vector, j, j - 1);
+      vector_swap(vector, lo + j, lo + j - 1);
     }
   }
+}
+
+void sort_insertion(vector_p vector, comparator_p comparator)
+{
+  size_t n = vector->length;
+  sort_sub_insertion(vector, comparator, 0, n);
 }
 
 void sort_shell(vector_p vector, comparator_p comparator)
@@ -122,16 +130,7 @@ void sort_merge_range(void **temp, vector_p vector, comparator_p comparator, int
   int range = hi - lo + 1;
   if(range <= 15)
   {
-    // use insertion sort for sub ranges less than 15 items. 
-    for(size_t i = 1; i < range; i++)
-    {
-      for(size_t j = i ; j > 0 && comparator(
-        vector_get(vector, lo + j), vector_get(vector, lo + j - 1)) < 0; j--)
-      {
-        vector_swap(vector, lo + j, lo + j - 1);
-      }
-    }
-
+    sort_sub_insertion(vector, comparator, lo, hi + 1);
     return;
   }
 
@@ -140,7 +139,8 @@ void sort_merge_range(void **temp, vector_p vector, comparator_p comparator, int
   sort_merge_range(temp, vector, comparator, lo, mid);
   sort_merge_range(temp, vector, comparator, mid + 1, hi);
   
-  if(comparator(vector_get(vector, mid), vector_get(vector, mid + 1)) < 0){
+  if(comparator(vector_get(vector, mid), vector_get(vector, mid + 1)) < 0)
+  {
     return;
   }
 
@@ -214,9 +214,10 @@ int partition(vector_p vector, int lo, int hi, comparator_p comparator)
 
 void quicksort(vector_p vector, int lo, int hi, comparator_p comparator)
 {
-  if(hi <= lo)
+  if(hi - lo <= 15)
   {
-    return;
+    sort_sub_insertion(vector, comparator, lo, hi + 1);
+    return; 
   }
 
   int j = partition(vector, lo, hi, comparator);

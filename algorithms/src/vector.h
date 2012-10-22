@@ -21,6 +21,8 @@ vector_p vector_create(size_t element_size);
 
 vector_p vector_create_with_capacity(size_t element_size, int capacity);
 
+vector_p vector_copy_shallow(vector_p original);
+
 void vector_copy_elements(vector_p vector);
 
 void vector_destroy(vector_p vector);
