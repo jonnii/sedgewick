@@ -16,3 +16,5 @@ algorithms/tests/sorting_tests
 algorithms/bin/benchmark
 algorithms/data
 algorithms/bin/unionfind
+
+algorithms/bin/scratch
