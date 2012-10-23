@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <stdio.h>
+
 #define DEFAULT_INITIAL_CAPACITY 10
 
 vector_p vector_create_with_capacity(size_t element_size, int capacity)
@@ -182,5 +184,42 @@ int vector_insert(vector_p vector, size_t index, void *data)
   vector->length++;
   vector->data[index] = vector_get_element_data(vector, data);
 
-  return 1; 
+  return 1;
+}
+
+void *vector_next(iterator_p iterator)
+{   
+  vector_iterator_p context = (vector_iterator_p)iterator->context;
+
+  if(iterator->current == NULL)
+  {
+    printf("moving to first\n");
+    iterator->current = context->vector->data[context->current_index];
+    return iterator->current;
+  }
+
+  if(context->current_index == context->vector->length)
+  {
+    free(iterator->context);
+    free(iterator);
+    return NULL;
+  }
+
+  context->current_index++;
+  iterator->current = context->vector->data[context->current_index];
+
+  return iterator->current;
+}
+
+iterator_p vector_iterator(vector_p vector)
+{
+  vector_iterator_p context = (vector_iterator_p)malloc(sizeof(vector_iterator_p));  
+  context->current_index = 0;
+  context->vector = vector;
+
+  iterator_p iterator = (iterator_p)malloc(sizeof(iterator_p));
+  iterator->next = vector_next;  
+  iterator->context = context; 
+
+  return iterator;
 }

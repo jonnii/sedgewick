@@ -277,6 +277,45 @@ char *test_copy_shallow()
   return NULL;
 }
 
+char *test_iterator()
+{
+  vector_p vector = vector_create(sizeof(int));
+  vector_add(vector, test_data(10));
+  vector_add(vector, test_data(20));
+
+  int total = 0;
+  int iterations = 0;
+  
+  iterator_p iterator = vector_iterator(vector);
+  while(iterator_next(iterator))
+  {
+    total += *(int*)iterator->current;
+    iterations++;
+  }
+
+  mu_assert(total == 30, "should have visited each item in the vector");
+  mu_assert(iterations == 2, "should have visited 2 items");
+
+  vector_destroy(vector);
+  return NULL;
+}
+
+char *test_iterator_empty()
+{
+  vector_p vector = vector_create(sizeof(int));
+  int iterations = 0;;
+  
+  iterator_p iterator = vector_iterator(vector);
+  while(iterator_next(iterator))
+  {
+    iterations++;
+  }
+
+  mu_assert(iterations == 0, "should not have iterated");
+
+  return NULL;
+}
+
 char *all_tests()
 {
   mu_suite_start();
@@ -298,6 +337,8 @@ char *all_tests()
   mu_run_test(test_insert_at_beginning);
   mu_run_test(test_insert_at_end);
   mu_run_test(test_copy_shallow);
+  mu_run_test(test_iterator);
+  mu_run_test(test_iterator_empty);
 
   return NULL;
 }

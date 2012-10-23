@@ -2,6 +2,7 @@
 #define _vector_h
 
 #include <stdlib.h>
+#include "iterator.h"
 
 struct vector {
   size_t length;
@@ -16,6 +17,14 @@ struct vector {
 typedef struct vector* vector_p;
 
 typedef void *(*retain_release_p)(struct vector *vector, void *data);
+
+struct vector_iterator
+{
+  vector_p vector;
+  size_t current_index;
+};
+
+typedef struct vector_iterator* vector_iterator_p;
 
 vector_p vector_create(size_t element_size);
 
@@ -38,5 +47,7 @@ void vector_remove(vector_p vector, size_t index);
 int vector_insert(vector_p vector, size_t index, void *data);
 
 int vector_swap(vector_p vector, int i, int j);
+
+iterator_p vector_iterator(vector_p vector);
 
 #endif

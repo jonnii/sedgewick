@@ -1,8 +1,18 @@
 #include <stdio.h>
-#include <time.h>
 #include <string.h>
 #include "../src/sorting.h"
 #include "../src/vector.h"
+
+#include <sys/time.h>
+#include <sys/resource.h>
+
+double get_time()
+{
+    struct timeval t;
+    struct timezone tzp;
+    gettimeofday(&t, &tzp);
+    return t.tv_sec + t.tv_usec*1e-6;
+}
 
 int *test_data(int value)
 {
@@ -28,18 +38,25 @@ sorter_p make_sorter(char *name)
   {
     return sort_merge;
   }
+  if(strncmp(name, "mergebu", 7) == 0)
+  {
+    return sort_merge_bu;
+  }
   if(strncmp(name, "quick", 5) == 0)
   {
     return sort_quicksort;
   }
-  else
-  {
-    return NULL;
-  }
+  return NULL;
 }
 
 int main(int argc, char *argv[])
 {
+  if(argc < 3)
+  {
+    printf("usage: benchmark <iterations> <method>\n");
+    return 1;
+  }
+
   printf("benchmark\n");
   int num_elements = atoi(argv[1]);
   printf("running %s with %d elements\n", argv[2], num_elements);
@@ -58,9 +75,9 @@ int main(int argc, char *argv[])
   {
     vector_p copy = vector_copy_shallow(vector);
     
-    float startedAt = (float)clock()/CLOCKS_PER_SEC;
+    double startedAt = get_time();
     sorter(copy, compare_intp);
-    float finishedAt = (float)clock()/CLOCKS_PER_SEC;
+    double finishedAt = get_time();
 
     totalRunningTime += (finishedAt - startedAt);
 
