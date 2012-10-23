@@ -23,7 +23,7 @@ int main()
     total += *(int*)iterator->current;
     iterations++;
   }
-
+  
   printf("%d\n", iterations);
   printf("%d\n", total);
   

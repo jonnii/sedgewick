@@ -188,13 +188,12 @@ int vector_insert(vector_p vector, size_t index, void *data)
 }
 
 void *vector_next(iterator_p iterator)
-{   
+{
   vector_iterator_p context = (vector_iterator_p)iterator->context;
 
   if(iterator->current == NULL)
   {
-    printf("moving to first\n");
-    iterator->current = context->vector->data[context->current_index];
+    iterator->current = context->vector->data[0];
     return iterator->current;
   }
 
@@ -220,6 +219,7 @@ iterator_p vector_iterator(vector_p vector)
   iterator_p iterator = (iterator_p)malloc(sizeof(iterator_p));
   iterator->next = vector_next;  
   iterator->context = context; 
+  iterator->current = NULL;
 
   return iterator;
 }
