@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "../src/sorting.h"
+#include "../src/quicksort.h"
 #include "../src/vector.h"
 
 #include <sys/time.h>
@@ -44,11 +45,11 @@ sorter_p make_sorter(char *name)
   }
   if(strncmp(name, "quick", 5) == 0)
   {
-    return sort_quicksort;
+    return quicksort;
   }
   if(strncmp(name, "quick3", 6) == 0)
   {
-    return sort_quicksort3;
+    return quicksort3;
   }
   return NULL;
 }

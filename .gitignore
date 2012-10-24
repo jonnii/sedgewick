@@ -18,3 +18,5 @@ algorithms/data
 algorithms/bin/unionfind
 
 algorithms/bin/scratch
+
+algorithms/tests/quicksort_tests
