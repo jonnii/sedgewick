@@ -36,7 +36,7 @@ void vector_copy_elements(vector_p vector);
 
 void vector_free(vector_p vector);
 
-void vector_add(vector_p vector, void *data);
+size_t vector_add(vector_p vector, void *data);
 
 void *vector_get(vector_p vector, size_t index);
 

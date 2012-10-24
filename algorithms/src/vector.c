@@ -99,7 +99,7 @@ void vector_maybe_contract(vector_p vector)
   }
 }
 
-void vector_add(vector_p vector, void *data)
+size_t vector_add(vector_p vector, void *data)
 {
   vector_maybe_expand(vector);
 
@@ -107,6 +107,8 @@ void vector_add(vector_p vector, void *data)
   
   vector->data[offset] = vector_get_element_data(vector, data);
   vector->length++;
+
+  return offset;
 }
 
 void *vector_get(vector_p vector, size_t index)

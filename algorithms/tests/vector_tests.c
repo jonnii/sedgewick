@@ -44,8 +44,9 @@ char *test_create_with_capacity()
 char *test_add()
 {
   vector_p vector = vector_create(sizeof(int));
-  vector_add(vector, test_data(1));
+  size_t index = vector_add(vector, test_data(1));
 
+  mu_assert(index == 0, "should have added at index 0");
   mu_assert(vector->length == 1, "expected length 1");
 
   vector_free(vector);
@@ -56,13 +57,16 @@ char *test_add_elements()
 {
   vector_p vector = vector_create(sizeof(int));
 
-  vector_add(vector, test_data(0));
-  vector_add(vector, test_data(1));
-  vector_add(vector, test_data(2));
+  size_t i0 = vector_add(vector, test_data(0));
+  size_t i1 = vector_add(vector, test_data(1));
+  size_t i2 = vector_add(vector, test_data(2));
 
   mu_assert(*(int*)vector_get(vector, 0) == 0, "expected 0");
   mu_assert(*(int*)vector_get(vector, 1) == 1, "expected 1");
   mu_assert(*(int*)vector_get(vector, 2) == 2, "expected 2");
+  mu_assert(i0 == 0, "should have index 0");
+  mu_assert(i1 == 1, "should have index 1");
+  mu_assert(i2 == 2, "should have index 2");
 
   vector_free(vector);
   return NULL;
