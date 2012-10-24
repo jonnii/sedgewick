@@ -92,13 +92,13 @@ int main(int argc, char *argv[])
       return 1;
     }
 
-    vector_destroy(copy);
+    vector_free(copy);
   }
 
   float averageRunningTime = totalRunningTime / runs;
   printf("total running time %fms\n", totalRunningTime);
   printf("average running time %fms over %d runs\n", averageRunningTime, runs);
 
-  vector_destroy(vector);
+  vector_free(vector);
   return 0;
 }

@@ -27,7 +27,7 @@ char *test_create()
     mu_assert(vector->data[i] == NULL, "data wasn't initialized to empty");
   }
 
-  vector_destroy(vector);
+  vector_free(vector);
   return NULL;
 }
 
@@ -37,7 +37,7 @@ char *test_create_with_capacity()
   
   mu_assert(vector->capacity == 50, "should set initial capacity");
 
-  vector_destroy(vector);
+  vector_free(vector);
   return NULL;
 }
 
@@ -48,7 +48,7 @@ char *test_add()
 
   mu_assert(vector->length == 1, "expected length 1");
 
-  vector_destroy(vector);
+  vector_free(vector);
   return NULL;
 }
 
@@ -64,7 +64,7 @@ char *test_add_elements()
   mu_assert(*(int*)vector_get(vector, 1) == 1, "expected 1");
   mu_assert(*(int*)vector_get(vector, 2) == 2, "expected 2");
 
-  vector_destroy(vector);
+  vector_free(vector);
   return NULL;
 }
 
@@ -81,7 +81,7 @@ char *test_add_elements_causing_expand()
   mu_assert(*(int*)vector_get(vector, 0) == 0, "expected 0");
   mu_assert(*(int*)vector_get(vector, 19) == 19, "expected 0");
 
-  vector_destroy(vector);
+  vector_free(vector);
   return NULL;
 }
 
@@ -93,7 +93,7 @@ char *test_set_copy_retain_policy()
   mu_assert(vector->create_element != NULL, "didnt set retain policy");
   mu_assert(vector->free_element != NULL, "didnt set release policy");
 
-  vector_destroy(vector);
+  vector_free(vector);
   return NULL;
 }
 
@@ -109,8 +109,7 @@ char *test_add_with_retain_policy()
   mu_assert(*got == 1, "expected same value");
   mu_assert(got != original, "shouldn't get same data back");
 
-  vector_destroy(vector);
-  
+  vector_free(vector);
   return NULL;
 }
 
@@ -122,7 +121,7 @@ char *test_get()
   int data = *((int*)vector_get(vector, 0));
   mu_assert(data == 1, "expected same value");
 
-  vector_destroy(vector);
+  vector_free(vector);
   return NULL;
 }
 
@@ -133,7 +132,7 @@ char *test_get_out_of_range()
   void *data = vector_get(vector, 30);
   mu_assert(data == NULL, "expected value to be null");
 
-  vector_destroy(vector);
+  vector_free(vector);
   return NULL;
 }
 
@@ -147,7 +146,7 @@ char *test_set()
   mu_assert(*(int*)vector_get(vector, 0) == 2, "expected 2");
   mu_assert(set, "expected to have set");
 
-  vector_destroy(vector);
+  vector_free(vector);
   return NULL;
 }
 
@@ -159,7 +158,7 @@ char *test_set_out_of_range()
 
   mu_assert(!set, "expected to not have set");
 
-  vector_destroy(vector);
+  vector_free(vector);
   return NULL;
 }
 
@@ -176,7 +175,7 @@ char *test_swap()
   mu_assert(*(int*)vector_get(vector, 0) == 1, "expected 1");
   mu_assert(*(int*)vector_get(vector, 1) == 0, "expected 0");
 
-  vector_destroy(vector);
+  vector_free(vector);
   return NULL;
 }
 
@@ -193,7 +192,7 @@ char *test_remove()
   mu_assert(vector->length == 2, "should have a length of 2");
   mu_assert(*(int*)vector_get(vector, 1) == 2, "should have removed item");
 
-  vector_destroy(vector);
+  vector_free(vector);
   return NULL;
 }
 
@@ -213,7 +212,7 @@ char *test_remove_and_resize()
 
   mu_assert(vector->capacity == 20, "should have reduced capacity");
 
-  vector_destroy(vector);
+  vector_free(vector);
   return NULL;
 }
 
@@ -225,7 +224,7 @@ char *test_remove_out_of_range()
 
   mu_assert(vector->length == 0, "should be empty");
 
-  vector_destroy(vector);
+  vector_free(vector);
   return NULL;
 }
 
@@ -241,7 +240,7 @@ char *test_insert_at_beginning()
   mu_assert(*(int*)vector_get(vector, 0) == 0, "should have added item at start");
   mu_assert(*(int*)vector_get(vector, 1) == 1, "should have moved other items");
   
-  vector_destroy(vector);
+  vector_free(vector);
   return NULL;
 }
 
@@ -257,7 +256,7 @@ char *test_insert_at_end()
   mu_assert(did_insert, "should have inserted");
   mu_assert(*(int*)vector_get(vector, 2) == 2, "should have added item at end");
   
-  vector_destroy(vector);
+  vector_free(vector);
   return NULL;
 }
 
@@ -272,8 +271,8 @@ char *test_copy_shallow()
   mu_assert(vector->length == copy->length, "expected same length for clone");
   mu_assert(*(int*)vector_get(copy, 1) == 1, "expected data to be copied");
 
-  vector_destroy(copy);
-  vector_destroy(vector);
+  vector_free(copy);
+  vector_free(vector);
   return NULL;
 }
 
@@ -296,7 +295,7 @@ char *test_iterator()
   mu_assert(total == 30, "should have visited each item in the vector");
   mu_assert(iterations == 2, "should have visited 2 items");
 
-  vector_destroy(vector);
+  vector_free(vector);
   return NULL;
 }
 

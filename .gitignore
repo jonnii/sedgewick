@@ -20,3 +20,5 @@ algorithms/bin/unionfind
 algorithms/bin/scratch
 
 algorithms/tests/quicksort_tests
+
+algorithms/tests/priority_queue_tests

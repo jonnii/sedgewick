@@ -1,7 +1,8 @@
 #ifndef _quicksort_h
 #define _quicksort_h
 
-#include "sorting.h"
+#include "comparator.h"
+#include "vector.h"
 
 void quicksort(vector_p vector, comparator_p comparator);
 

@@ -34,7 +34,7 @@ vector_p vector_copy_shallow(vector_p original);
 
 void vector_copy_elements(vector_p vector);
 
-void vector_destroy(vector_p vector);
+void vector_free(vector_p vector);
 
 void vector_add(vector_p vector, void *data);
 

@@ -1,5 +1,5 @@
-
 #include "test_helpers.h"
+#include "../src/sorting.h"
 #include "../src/quicksort.h"
 
 char *test_quicksort()
@@ -9,7 +9,7 @@ char *test_quicksort()
   quicksort(vector, compare_intp);
   mu_assert(check_sorted(vector, compare_intp) == 1, "should have been sorted");
 
-  vector_destroy(vector);
+  vector_free(vector);
   return NULL;
 }
 
@@ -20,7 +20,7 @@ char *test_quicksort3()
   quicksort3(vector, compare_intp);
   mu_assert(check_sorted(vector, compare_intp) == 1, "should have been sorted");
 
-  vector_destroy(vector);
+  vector_free(vector);
   return NULL;
 }
 

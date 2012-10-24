@@ -24,7 +24,7 @@ vector_p vector_create(size_t element_size)
   return vector_create_with_capacity(element_size, DEFAULT_INITIAL_CAPACITY);
 }
 
-void vector_destroy(vector_p vector)
+void vector_free(vector_p vector)
 {
   if(vector->free_element != NULL)
   {

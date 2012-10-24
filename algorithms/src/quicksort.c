@@ -1,4 +1,5 @@
 #include "quicksort.h"
+#include "sorting.h"
 
 #define CUT_OFF_TO_INSERTION_SORT 10
 

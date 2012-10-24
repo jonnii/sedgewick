@@ -3,11 +3,6 @@
 #include <string.h>
 #include <stdio.h>
 
-int compare_intp(void *i, void *j)
-{
-  return *((int*)i) - *((int*)j);
-}
-
 int check_sorted(vector_p vector, comparator_p comparator)
 {
   for(size_t n = 1 ; n < vector->length; n++)
