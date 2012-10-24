@@ -46,6 +46,10 @@ sorter_p make_sorter(char *name)
   {
     return sort_quicksort;
   }
+  if(strncmp(name, "quick3", 6) == 0)
+  {
+    return sort_quicksort3;
+  }
   return NULL;
 }
 
@@ -80,6 +84,12 @@ int main(int argc, char *argv[])
     double finishedAt = get_time();
 
     totalRunningTime += (finishedAt - startedAt);
+    
+    if(!check_sorted(copy, compare_intp))
+    {
+      printf("not sorted\n");
+      return 1;
+    }
 
     vector_destroy(copy);
   }

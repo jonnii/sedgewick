@@ -21,6 +21,8 @@ void sort_merge_bu(vector_p vector, comparator_p comparator);
 
 void sort_quicksort(vector_p vector, comparator_p comparator);
 
+void sort_quicksort3(vector_p vector, comparator_p comparator);
+
 int compare_intp(void *i, void *j);
 
 #endif

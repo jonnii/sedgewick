@@ -112,6 +112,17 @@ char *test_quicksort()
   return NULL;
 }
 
+char *test_quicksort3()
+{
+  vector_p vector = make_vector();
+
+  sort_quicksort3(vector, compare);
+  mu_assert(check_sorted(vector, compare) == 1, "should have been sorted");
+
+  vector_destroy(vector);
+  return NULL;
+}
+
 char *all_tests()
 {
   mu_suite_start();
@@ -123,6 +134,7 @@ char *all_tests()
   mu_run_test(test_merge_sort);
   mu_run_test(test_merge_bu_sort);
   mu_run_test(test_quicksort);
+  mu_run_test(test_quicksort3);
 
   return NULL;
 }
