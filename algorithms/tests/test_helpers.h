@@ -28,4 +28,35 @@ vector_p make_vector()
   return vector;
 }
 
+vector_p make_vector_of_size(size_t size)
+{
+  vector_p vector = vector_create(sizeof(int));
+  for(size_t i = 0 ; i < size ; i++)
+  {
+    int random = rand() % size;
+    vector_add(vector, test_data(random));
+  }
+  return vector;
+}
+
+vector_p make_sorted(size_t size)
+{
+  vector_p vector = vector_create(sizeof(int));
+  for(size_t i = 0 ; i < size ; i++)
+  {
+    vector_add(vector, test_data(i));
+  }
+  return vector;
+}
+
+vector_p make_reverse_sorted(size_t size)
+{
+  vector_p vector = vector_create(sizeof(int));
+  for(size_t i = size ; i > 0 ; i--)
+  {
+    vector_add(vector, test_data(i));
+  }
+  return vector;
+}
+
 #endif

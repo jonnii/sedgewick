@@ -12,8 +12,6 @@ void sort_selection(vector_p vector, comparator_p comparator);
 
 void sort_insertion(vector_p vector, comparator_p comparator);
 
-void sort_sub_insertion(vector_p vector, comparator_p comparator, size_t lo, size_t hi);
-
 void sort_shell(vector_p vector, comparator_p comparator);
 
 void sort_merge(vector_p vector, comparator_p comparator);

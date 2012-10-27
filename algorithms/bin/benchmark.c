@@ -7,6 +7,8 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 
+#define RUNS 100
+
 double get_time()
 {
     struct timeval t;
@@ -51,32 +53,24 @@ sorter_p make_sorter(char *name)
   {
     return quicksort3;
   }
+  if(strncmp(name, "quickp", 6) == 0)
+  {
+    return quicksortp;
+  }
   return NULL;
 }
 
-int main(int argc, char *argv[])
+void benchmark_one(vector_p vector, char *sorter_name)
 {
-  if(argc < 3)
-  {
-    printf("usage: benchmark <iterations> <method>\n");
-    return 1;
-  }
-
-  printf("benchmark\n");
-  int num_elements = atoi(argv[1]);
-  printf("running %s with %d elements\n", argv[2], num_elements);
-
-  vector_p vector = make_vector(num_elements);
-  sorter_p sorter = make_sorter(argv[2]);
-  
+  sorter_p sorter = make_sorter(sorter_name);
   if(sorter == NULL)
   {
-    printf("could not find a sorter for %s\n", argv[2]);
+    printf("could not find a sorter for %s\n", sorter_name);
+    return;
   }
 
-  int runs = 10;
   float totalRunningTime = 0;
-  for(int i = 0 ; i < runs ; ++i)
+  for(int i = 0 ; i < RUNS ; ++i)
   {
     vector_p copy = vector_copy_shallow(vector);
     
@@ -89,15 +83,40 @@ int main(int argc, char *argv[])
     if(!check_sorted(copy, compare_intp))
     {
       printf("not sorted\n");
-      return 1;
+      return;
     }
 
     vector_free(copy);
   }
 
-  float averageRunningTime = totalRunningTime / runs;
-  printf("total running time %fms\n", totalRunningTime);
-  printf("average running time %fms over %d runs\n", averageRunningTime, runs);
+  float averageRunningTime = totalRunningTime / RUNS;
+  printf("%s\taverage %fms\n", sorter_name, averageRunningTime);
+}
+
+int main(int argc, char *argv[])
+{
+  if(argc < 3)
+  {
+    printf("usage: benchmark <iterations> <method>\n");
+    return 1;
+  }
+
+  printf("benchmark\n");
+  int num_elements = atoi(argv[1]);
+  printf("running %s with %d elements %d runs\n", argv[2], num_elements, RUNS);
+
+  vector_p vector = make_vector(num_elements);
+  if(strncmp(argv[2], "all", 3) == 0)
+  {
+    benchmark_one(vector, "quick");
+    benchmark_one(vector, "quick3");
+    benchmark_one(vector, "quickp");
+    benchmark_one(vector, "merge");
+  }
+  else
+  {
+    benchmark_one(vector, argv[2]);
+  }
 
   vector_free(vector);
   return 0;
