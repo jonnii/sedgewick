@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "../src/vector.h"
 #include "../src/quicksort.h"
 
@@ -9,40 +10,25 @@ int *test_data(int value)
   return data;
 }
 
+int qscompare(const void *i, const void *j)
+{
+  return **((int**)i) - **((int**)j);
+}
+
 int main()
 {
   vector_p vector = vector_create(sizeof(int));
-  
-  vector_add(vector, test_data(70));
-  vector_add(vector, test_data(60));
-  vector_add(vector, test_data(50));
-  vector_add(vector, test_data(40));
-  vector_add(vector, test_data(30));
-  vector_add(vector, test_data(20));
-  vector_add(vector, test_data(10));
+  vector_add(vector, test_data(4));
+  vector_add(vector, test_data(1));
+  vector_add(vector, test_data(2));
+  vector_add(vector, test_data(3));
 
-  vector_add(vector, test_data(120));
-  vector_add(vector, test_data(110));
-  vector_add(vector, test_data(100));
-  vector_add(vector, test_data(90));
-  vector_add(vector, test_data(80));
+  qsort(vector->data, vector->length, sizeof(void*), qscompare);
   
-  vector_add(vector, test_data(40));
-  vector_add(vector, test_data(30));
-  vector_add(vector, test_data(20));
-  vector_add(vector, test_data(10));
-  
-  vector_add(vector, test_data(40));
-  vector_add(vector, test_data(30));
-  vector_add(vector, test_data(20));
-  vector_add(vector, test_data(10));
-  
-
-  quicksort(vector, compare_intp);
-
   for(size_t i = 0 ; i < vector->length ; i++)
   {
-    printf("%d\n", *(int*) vector_get(vector, i));
+    int k = *(int*) vector_get(vector, i);
+    printf("%d\n", k);
   }
 
   vector_free(vector);

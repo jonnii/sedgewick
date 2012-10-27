@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "../src/sorting.h"
 #include "../src/quicksort.h"
 #include "../src/vector.h"
@@ -93,6 +94,37 @@ void benchmark_one(vector_p vector, char *sorter_name)
   printf("%s\taverage %fms\n", sorter_name, averageRunningTime);
 }
 
+int qscompare(const void *i, const void *j)
+{
+  return **((int**)i) - **((int**)j);
+}
+
+void benchmark_system(vector_p vector)
+{
+  float totalRunningTime = 0;
+  for(int i = 0 ; i < RUNS ; ++i)
+  {
+    vector_p copy = vector_copy_shallow(vector);
+    
+    double startedAt = get_time();
+    qsort(copy->data, copy->length, sizeof(void*), qscompare);
+    double finishedAt = get_time();
+
+    totalRunningTime += (finishedAt - startedAt);
+    
+    if(!check_sorted(copy, compare_intp))
+    {
+      printf("not sorted\n");
+      return;
+    }
+
+    vector_free(copy);
+  }
+
+  float averageRunningTime = totalRunningTime / RUNS;
+  printf("%s\taverage %fms\n", "system", averageRunningTime);
+}
+
 int main(int argc, char *argv[])
 {
   if(argc < 3)
@@ -112,6 +144,8 @@ int main(int argc, char *argv[])
     benchmark_one(vector, "quick3");
     benchmark_one(vector, "quickp");
     benchmark_one(vector, "merge");
+
+    benchmark_system(vector);
   }
   else
   {
